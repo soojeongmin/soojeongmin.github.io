@@ -6,7 +6,7 @@ entries:
       - title: github
         url: https://github.com/soojeongmin
       - title: email
-        mail: soojeongmin@soongsil.ac.kr
+        url: 'mailto:soojeongmin@soongsil.ac.kr'
 
   - title: all posts
     post_list:
