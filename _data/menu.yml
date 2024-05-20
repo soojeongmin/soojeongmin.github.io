@@ -5,8 +5,6 @@ entries:
       - title: Soongsil Univ. Software 20
       - title: github
         url: https://github.com/soojeongmin
-      - title: email
-        url: mailto: https://github.com/soojeongmin
 
   - title: all posts
     post_list:
