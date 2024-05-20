@@ -14,15 +14,3 @@ entries:
       show_more: true
       show_more_text: See archive...
       show_more_url: archive.html
-
-entries:
-  - title: portfolio
-    entries:
-      - title: [소프트웨어공모전] 자리있슈
-        url: https://github.com/ssusemicolon/Front
-      - title: [소프트웨어프로젝트] 신트래블
-      url: https://github.com/sintravel
-      - title: [캡스톤디자인종합프로젝트1] 퀵보드
-      url: https://github.com/capstone-Quickboard/Quickboard-Client
-      - title: [창의적종합설계] SSU Corona Project
-      url: https://github.com/poby123/ssuCoronaProject_Client
