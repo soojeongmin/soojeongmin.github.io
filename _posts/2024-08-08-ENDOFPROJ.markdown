@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "NCP"
+title:  "네이버클라우드플랫폼"
 date:   2024-08-08 11:40:00 +0900
 categories: NaverCloudCamp
 ---
