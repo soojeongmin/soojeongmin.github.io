@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "네이버클라우드플랫폼"
-date:   2024-08-08 11:40:00 +0900
+date:   2024-08-08 11:50:00 +0900
 categories: NaverCloudCamp
 ---
 드디어 길고 길었던 미니 프로젝트들이 끝났습니다!
