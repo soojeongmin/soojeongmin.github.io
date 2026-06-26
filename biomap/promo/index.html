@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>생동감 — 자연을 기록하는 가장 가벼운 방법</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --accent:#00C98A; --accent-hover:#00B47B; --accent-active:#009E6C;
+    --accent-soft:#E6FAF3; --accent-fg:#fff;
+    --g900:#2A2A2A; --g700:#3C3C3C; --g500:#6A6A6A; --g400:#7A7A7A; --g300:#9B9B9B;
+    --bg:#FAFAFA; --surface:#fff; --border:#ECECEC;
+    --text:var(--g900); --muted:var(--g500);
+    --r:18px; --shadow:0 2px 8px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:Pretendard,system-ui,sans-serif;background:var(--bg);color:var(--text);
+    line-height:1.6;-webkit-font-smoothing:antialiased;letter-spacing:-.01em;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .num{font-variant-numeric:tabular-nums}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;background:rgba(250,250,250,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px}
+  .brand svg{width:30px;height:30px;display:block}
+  .nav-cta{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-fg);
+    padding:9px 18px;border-radius:999px;font-weight:600;font-size:14px;text-decoration:none;transition:.18s;
+    border:none;cursor:pointer;font-family:inherit}
+  .nav-cta:hover{background:var(--accent-hover)}
+
+  /* hero */
+  .hero{padding:96px 0 80px;text-align:center}
+  .badge{display:inline-flex;align-items:center;gap:7px;background:var(--accent-soft);color:var(--accent-active);
+    font-weight:600;font-size:13px;padding:7px 14px;border-radius:999px;margin-bottom:28px}
+  .badge i{width:7px;height:7px;border-radius:50%;background:var(--accent);display:block}
+  h1{font-size:clamp(34px,6vw,56px);font-weight:800;line-height:1.12;letter-spacing:-.03em}
+  h1 .em{color:var(--accent)}
+  .sub{margin:22px auto 0;max-width:560px;font-size:clamp(16px,2.2vw,19px);color:var(--muted)}
+  .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:14px;font-weight:600;
+    font-size:15px;text-decoration:none;transition:.18s;border:1px solid transparent;cursor:pointer;font-family:inherit}
+  .btn.pri{background:var(--accent);color:#fff}
+  .btn.pri:hover{background:var(--accent-hover);transform:translateY(-1px)}
+  .btn.sec{background:var(--surface);color:var(--g700);border-color:var(--border)}
+  .btn.sec:hover{border-color:var(--g300)}
+
+  /* phone mock */
+  .stage{margin:64px auto 0;display:flex;justify-content:center;gap:24px;perspective:1400px}
+  .phone{width:248px;flex:0 0 auto;background:var(--surface);border:1px solid var(--border);border-radius:34px;
+    box-shadow:var(--shadow);padding:12px;transition:transform .4s}
+  .phone:nth-child(1){transform:rotateY(8deg) translateY(14px)}
+  .phone:nth-child(2){transform:translateY(-6px) scale(1.04);z-index:2}
+  .phone:nth-child(3){transform:rotateY(-8deg) translateY(14px)}
+  .screen{border-radius:24px;overflow:hidden;background:#F3F5F4;aspect-ratio:9/19;display:flex;flex-direction:column}
+  .scr-top{height:34px;display:flex;align-items:center;justify-content:center}
+  .notch{width:84px;height:7px;border-radius:99px;background:#E2E5E4}
+
+  /* map screen */
+  .map{flex:1;position:relative;background:
+    radial-gradient(circle at 30% 30%, #E9F6EF, #DCEFE5 60%, #D2E7DB);overflow:hidden}
+  .road{position:absolute;background:#fff;opacity:.7}
+  .pin{position:absolute;width:34px;height:34px;border-radius:50%;background:#fff;border:2px solid var(--accent);
+    display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.12);font-size:16px}
+  .pin.cluster{background:var(--accent);border:none;color:#fff;font-weight:700;font-size:13px;width:38px;height:38px}
+  .mcard{position:absolute;left:14px;right:14px;bottom:14px;background:#fff;border-radius:14px;padding:12px 14px;
+    box-shadow:0 6px 18px rgba(0,0,0,.08)}
+  .mcard .t{font-size:11px;color:var(--accent-active);font-weight:700}
+  .mcard .d{font-size:13px;font-weight:600;margin-top:2px}
+  .bar{height:6px;border-radius:99px;background:#EDEFEE;margin-top:8px;overflow:hidden}
+  .bar i{display:block;height:100%;width:64%;background:var(--accent);border-radius:99px}
+
+  /* dex screen */
+  .dex{flex:1;background:#fff;padding:14px 12px;overflow:hidden}
+  .dex h4{font-size:13px;font-weight:700;margin-bottom:10px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .cell{aspect-ratio:1;border-radius:12px;background:#F3F5F4;display:flex;align-items:center;justify-content:center;font-size:22px}
+  .cell.on{background:var(--accent-soft);outline:1.5px solid var(--accent)}
+  .cell.lock{color:#C9CECC;font-size:15px}
+
+  /* duel screen */
+  .duel{flex:1;background:#fff;padding:16px 14px;display:flex;flex-direction:column;gap:12px}
+  .vs{display:flex;align-items:center;justify-content:space-between}
+  .ply{text-align:center;flex:1}
+  .av{width:46px;height:46px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;
+    font-size:22px;background:#F3F5F4;border:2px solid var(--accent)}
+  .ply .nm{font-size:11px;font-weight:600;color:var(--g700)}
+  .ply .sc{font-size:24px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+  .vstxt{font-size:13px;font-weight:800;color:var(--g300)}
+  .pot{margin-top:auto;background:var(--accent-soft);border-radius:12px;padding:10px 12px;text-align:center}
+  .pot .pl{font-size:11px;color:var(--accent-active);font-weight:600}
+  .pot .pv{font-size:18px;font-weight:800;color:var(--accent-active)}
+
+  /* sections */
+  section{padding:84px 0}
+  .eyebrow{text-align:center;color:var(--accent);font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .h2{text-align:center;font-size:clamp(26px,4vw,36px);font-weight:800;letter-spacing:-.02em;margin-top:10px}
+  .lead{text-align:center;color:var(--muted);max-width:540px;margin:14px auto 0;font-size:16px}
+
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:26px 24px;
+    box-shadow:var(--shadow);transition:.2s}
+  .card:hover{transform:translateY(-3px);border-color:#E0E0E0}
+  .ic{width:46px;height:46px;border-radius:13px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+  .ic svg{width:24px;height:24px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .card h3{font-size:18px;font-weight:700}
+  .card p{margin-top:8px;color:var(--muted);font-size:14.5px}
+  .card.wide{grid-column:span 3;display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:center;padding:0;overflow:hidden}
+  .card.wide .pad{padding:36px 38px}
+  .card.wide .visual{height:100%;min-height:240px;background:linear-gradient(135deg,#E9F6EF,#D2E7DB);
+    display:flex;align-items:center;justify-content:center;position:relative}
+
+  /* stats */
+  .stats{background:var(--g900);color:#fff}
+  .stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+  .stat .v{font-size:clamp(30px,5vw,44px);font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+  .stat .v span{color:var(--accent)}
+  .stat .l{color:#B8BBBA;font-size:14px;margin-top:4px}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px}
+  .step{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px 24px;position:relative}
+  .step .n{font-size:13px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+  .step h3{font-size:17px;font-weight:700;margin-top:8px}
+  .step p{color:var(--muted);font-size:14px;margin-top:6px}
+
+  /* final cta */
+  .final{text-align:center}
+  .final .box{background:linear-gradient(135deg,var(--accent),var(--accent-active));border-radius:28px;
+    padding:64px 32px;color:#fff;box-shadow:0 20px 50px rgba(0,201,138,.25)}
+  .final h2{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-.02em}
+  .final p{margin:14px auto 0;max-width:460px;opacity:.92;font-size:16px}
+  .final .btn.pri{background:#fff;color:var(--accent-active);margin-top:30px}
+  .final .btn.pri:hover{background:#F4FFFB}
+
+  /* store buttons */
+  .stores{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+  .store{display:flex;flex-direction:column;align-items:stretch;gap:8px;min-width:200px}
+  .sbtn{display:flex;align-items:center;gap:12px;padding:13px 22px;border-radius:14px;text-decoration:none;
+    font-weight:600;transition:.18s;border:1px solid transparent;justify-content:center}
+  .sbtn svg{width:24px;height:24px;flex:0 0 auto}
+  .sbtn .st{text-align:left;line-height:1.15}
+  .sbtn .st small{display:block;font-size:11px;font-weight:500;opacity:.7}
+  .sbtn .st b{font-size:15px;font-weight:700}
+  .sbtn.ios{background:#fff;color:var(--g900)}
+  .sbtn.ios:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.12)}
+  .sbtn.aos{background:rgba(255,255,255,.16);color:rgba(255,255,255,.85);cursor:not-allowed}
+  .sbtn.aos svg{opacity:.85}
+  .dday{font-size:12.5px;font-weight:600;color:rgba(255,255,255,.92);text-align:center;
+    background:rgba(0,0,0,.16);border-radius:99px;padding:5px 12px}
+  .dday .n{font-variant-numeric:tabular-nums;font-weight:800}
+
+  /* modal */
+  .modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:24px}
+  .modal.open{display:flex}
+  .modal .ov{position:absolute;inset:0;background:rgba(20,20,20,.45);backdrop-filter:blur(4px)}
+  .modal .sheet{position:relative;background:var(--surface);border-radius:24px;width:100%;max-width:380px;
+    padding:30px 26px;box-shadow:0 30px 70px rgba(0,0,0,.3);animation:pop .22s ease}
+  @keyframes pop{from{transform:translateY(12px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+  .modal .x{position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:#F3F5F4;border-radius:50%;
+    color:var(--g500);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .modal .x:hover{background:#ECECEC}
+  .modal h3{font-size:20px;font-weight:800;letter-spacing:-.02em}
+  .modal p{color:var(--muted);font-size:14px;margin-top:6px;margin-bottom:22px}
+  .modal .store{min-width:0}
+  .modal .sbtn.ios{background:var(--g900);color:#fff;border-color:var(--g900)}
+  .modal .sbtn.ios:hover{background:#000}
+  .modal .sbtn.aos{background:#F3F5F4;color:var(--g400);border-color:var(--border)}
+  .modal .dday{background:var(--accent-soft);color:var(--accent-active)}
+
+  footer{padding:48px 0;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+  footer .brand{font-size:15px}
+  footer a{color:var(--muted);text-decoration:none;margin-left:18px}
+  footer a:hover{color:var(--g700)}
+
+  @media(max-width:860px){
+    .features,.stats .wrap,.steps{grid-template-columns:1fr}
+    .stats .wrap{grid-template-columns:repeat(2,1fr)}
+    .card.wide{grid-template-columns:1fr}
+    .stage .phone:nth-child(1),.stage .phone:nth-child(3){display:none}
+    .stage .phone:nth-child(2){transform:none}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 512 512"><path d="M142 302A140 140 0 1 1 370 302L256 460Z" fill="#00c98a"/><g stroke="#fff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M256 140V320"/><path d="M256 175L214 217M256 175L298 217"/><path d="M256 240L214 282M256 240L298 282"/></g></svg>
+      생동감
+    </div>
+    <button class="nav-cta" type="button" data-open-modal>앱 받기</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="badge"><i></i> 자연 관찰 · 도감 · 친구 경쟁</div>
+    <h1>스쳐 지나간 자연,<br><span class="em">기록</span>으로 남기세요</h1>
+    <p class="sub">사진 한 장이나 새소리 한 번이면 종을 찾아주고 지도에 쌓이고 나만의 도감이 채워집니다. 친구와 함께면 더 즐겁고요.</p>
+    <div class="cta-row">
+      <button class="btn pri" type="button" data-open-modal>지금 시작하기</button>
+      <a class="btn sec" href="#features">기능 둘러보기</a>
+    </div>
+
+    <div class="stage">
+      <!-- 도감 -->
+      <div class="phone"><div class="screen">
+        <div class="scr-top"><div class="notch"></div></div>
+        <div class="dex">
+          <h4>나의 도감</h4>
+          <div class="grid3">
+            <div class="cell on">🌿</div><div class="cell on">🐞</div><div class="cell on">🦋</div>
+            <div class="cell on">🌸</div><div class="cell lock">＋</div><div class="cell on">🐦</div>
+            <div class="cell lock">？</div><div class="cell on">🍄</div><div class="cell lock">？</div>
+          </div>
+        </div>
+      </div></div>
+      <!-- 지도 -->
+      <div class="phone"><div class="screen">
+        <div class="scr-top"><div class="notch"></div></div>
+        <div class="map">
+          <div class="road" style="left:0;right:0;top:42%;height:8px;transform:rotate(-6deg)"></div>
+          <div class="road" style="left:30%;top:0;bottom:0;width:8px;transform:rotate(5deg)"></div>
+          <div class="pin" style="left:22%;top:24%">🌿</div>
+          <div class="pin cluster" style="left:54%;top:34%">12</div>
+          <div class="pin" style="left:30%;top:56%">🐞</div>
+          <div class="pin" style="left:66%;top:62%">🦋</div>
+          <div class="mcard">
+            <div class="t">오늘의 미션</div>
+            <div class="d">곤충 3종 발견하기</div>
+            <div class="bar"><i></i></div>
+          </div>
+        </div>
+      </div></div>
+      <!-- 대결 -->
+      <div class="phone"><div class="screen">
+        <div class="scr-top"><div class="notch"></div></div>
+        <div class="duel">
+          <h4 style="font-size:13px;font-weight:700">친구 대결</h4>
+          <div class="vs">
+            <div class="ply"><div class="av">🦊</div><div class="nm">나</div><div class="sc">8</div></div>
+            <div class="vstxt">VS</div>
+            <div class="ply"><div class="av">🐢</div><div class="nm">민준</div><div class="sc">5</div></div>
+          </div>
+          <div class="pot">
+            <div class="pl">승자가 가져갈 잎</div>
+            <div class="pv">130</div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <p class="eyebrow">Features</p>
+    <h2 class="h2">관찰을 놀이로 바꾸는 것들</h2>
+    <p class="lead">발견하고 찾고 모으고 겨루기까지, 생동감 하나로 이어집니다.</p>
+
+    <div class="features">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L19 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="13" cy="12" r="3.5"/></svg></div>
+        <h3>AI 종 식별</h3>
+        <p>카메라로 찍으면 학명과 분류군을 바로 알려줘요. 이름을 몰라도 괜찮아요.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h2l2-6 4 14 3-10 2 5h5"/></svg></div>
+        <h3>새소리 식별</h3>
+        <p>새가 안 보여도 괜찮아요. 소리만 녹음하면 어떤 새인지 찾아드립니다.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg></div>
+        <h3>지도에 기록</h3>
+        <p>발견한 자리에 핀이 그대로 꽂힙니다. 핀이 많아지면 알아서 깔끔하게 묶어주고요.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v15l-7-3-7 3z"/><path d="M9 8h6M9 12h4"/></svg></div>
+        <h3>나만의 도감</h3>
+        <p>채집한 종이 카드로 쌓입니다. 과별로 테마별로 컬렉션을 채워보세요.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M16 18v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1"/><circle cx="9.5" cy="7" r="3"/><path d="M21 18v-1a4 4 0 0 0-3-3.8M16 4.2a3 3 0 0 1 0 5.6"/></svg></div>
+        <h3>길드 함께하기</h3>
+        <p>친구·반·동아리끼리 길드를 만들어 기록을 함께 모으고 채팅으로 응원하세요.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M6 9V3h12v6a6 6 0 0 1-12 0Z"/><path d="M6 5H3v2a3 3 0 0 0 3 3M18 5h3v2a3 3 0 0 1-3 3M9 21h6M12 15v6"/></svg></div>
+        <h3>친구 대결 · 랭킹</h3>
+        <p>잎을 걸고 1:1로 겨루고 주간 순위로 경쟁해요. 누가 나를 추월하면 바로 알림이 옵니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap">
+    <div class="stat"><div class="v"><span>1,400</span>+</div><div class="l">식별 가능 식물종</div></div>
+    <div class="stat"><div class="v"><span>1,200</span>+</div><div class="l">곤충 도감 수록</div></div>
+    <div class="stat"><div class="v">사진 <span>1</span>장</div><div class="l">으로 즉시 식별</div></div>
+    <div class="stat"><div class="v">매일 <span>7</span></div><div class="l">스트릭으로 꾸준히</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">How it works</p>
+    <h2 class="h2">세 걸음이면 됩니다</h2>
+    <div class="steps">
+      <div class="step"><div class="n">STEP 01</div><h3>찍거나 녹음하기</h3><p>산책길에 만난 꽃과 벌레는 사진으로, 새는 소리로 담으세요.</p></div>
+      <div class="step"><div class="n">STEP 02</div><h3>이름 확인하기</h3><p>AI가 종을 알려주고 지도와 도감에 자동으로 기록돼요.</p></div>
+      <div class="step"><div class="n">STEP 03</div><h3>함께 즐기기</h3><p>길드에서 공유하고 친구와 랭킹·대결로 겨뤄요.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="download" class="final">
+  <div class="wrap">
+    <div class="box">
+      <h2>오늘 산책부터 생동감과 함께</h2>
+      <p>가볍게 시작했는데 어느새 나만의 자연 도감이 채워지는 경험.</p>
+      <div class="stores">
+        <div class="store">
+          <a class="sbtn ios" href="https://apps.apple.com/kr/app/%EC%83%9D%EB%8F%99%EA%B0%90/id6775654322" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 1.6c.1 1-.3 2-.9 2.8-.7.8-1.7 1.4-2.7 1.3-.1-1 .4-2 1-2.7.6-.8 1.7-1.4 2.6-1.4ZM19.3 17c-.5 1.1-.8 1.6-1.4 2.6-.9 1.4-2.1 3.1-3.6 3.1-1.3 0-1.7-.9-3.5-.8-1.8 0-2.2.8-3.5.8-1.5 0-2.7-1.5-3.6-2.9C1.1 16 .9 11.4 2.5 9c1.1-1.7 2.9-2.7 4.5-2.7 1.7 0 2.7 1 4.1 1 1.3 0 2.1-1 4.1-1 1.5 0 3 .8 4.1 2.2-3.6 2-3 7.1.0 8.5Z"/></svg>
+            <span class="st"><small>App Store에서</small><b>iOS 다운로드</b></span>
+          </a>
+        </div>
+        <div class="store">
+          <a class="sbtn ios" href="https://play.google.com/store/apps/details?id=com.soojeongmin.biomap&hl=ko" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5V3.5c0-.4.2-.7.5-.9L13 12l-9.5 9.4c-.3-.2-.5-.5-.5-.9ZM14.5 13.5l2.6 2.6-9.6 5.5 7-8.1ZM17.1 7.9 14.5 10.5 7.5 2.4l9.6 5.5ZM18.3 11.2l2.4 1.4c.7.4.7 1.4 0 1.8l-2.4 1.4-2.8-2.3 2.8-2.3Z"/></svg>
+            <span class="st"><small>Google Play에서</small><b>Android 다운로드</b></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="display:flex;align-items:center;gap:8px;font-weight:700">
+      <svg viewBox="0 0 512 512" style="width:24px;height:24px"><path d="M142 302A140 140 0 1 1 370 302L256 460Z" fill="#00c98a"/><g stroke="#fff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M256 140V320"/><path d="M256 175L214 217M256 175L298 217"/><path d="M256 240L214 282M256 240L298 282"/></g></svg>
+      생동감
+    </div>
+    <div>
+      <span class="num">© 2026 생동감</span>
+    </div>
+  </div>
+</footer>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="ov" data-close-modal></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="앱 설치">
+    <button class="x" type="button" data-close-modal aria-label="닫기">×</button>
+    <h3>생동감 설치하기</h3>
+    <p>App Store와 Google Play에서 만나보세요.</p>
+    <div class="stores" style="flex-direction:column;margin-top:0">
+      <div class="store" style="width:100%">
+        <a class="sbtn ios" href="https://apps.apple.com/kr/app/%EC%83%9D%EB%8F%99%EA%B0%90/id6775654322" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 1.6c.1 1-.3 2-.9 2.8-.7.8-1.7 1.4-2.7 1.3-.1-1 .4-2 1-2.7.6-.8 1.7-1.4 2.6-1.4ZM19.3 17c-.5 1.1-.8 1.6-1.4 2.6-.9 1.4-2.1 3.1-3.6 3.1-1.3 0-1.7-.9-3.5-.8-1.8 0-2.2.8-3.5.8-1.5 0-2.7-1.5-3.6-2.9C1.1 16 .9 11.4 2.5 9c1.1-1.7 2.9-2.7 4.5-2.7 1.7 0 2.7 1 4.1 1 1.3 0 2.1-1 4.1-1 1.5 0 3 .8 4.1 2.2-3.6 2-3 7.1.0 8.5Z"/></svg>
+          <span class="st"><small>App Store에서</small><b>iOS 다운로드</b></span>
+        </a>
+      </div>
+      <div class="store" style="width:100%">
+        <a class="sbtn ios" href="https://play.google.com/store/apps/details?id=com.soojeongmin.biomap&hl=ko" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5V3.5c0-.4.2-.7.5-.9L13 12l-9.5 9.4c-.3-.2-.5-.5-.5-.9ZM14.5 13.5l2.6 2.6-9.6 5.5 7-8.1ZM17.1 7.9 14.5 10.5 7.5 2.4l9.6 5.5ZM18.3 11.2l2.4 1.4c.7.4.7 1.4 0 1.8l-2.4 1.4-2.8-2.3 2.8-2.3Z"/></svg>
+          <span class="st"><small>Google Play에서</small><b>Android 다운로드</b></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var modal=document.getElementById("modal");
+  function open(){modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}
+  function close(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.style.overflow=""}
+  document.querySelectorAll("[data-open-modal]").forEach(function(b){b.addEventListener("click",open)});
+  document.querySelectorAll("[data-close-modal]").forEach(function(b){b.addEventListener("click",close)});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")close()});
+})();
+</script>
+
+</body>
+</html>
