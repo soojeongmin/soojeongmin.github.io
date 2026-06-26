@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>식물카드 · 개인정보처리방침</title>
+<style>
+  :root {
+    --bg: #f7f8fb;
+    --surface: #ffffff;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --accent: #00C98A;
+    --border: #e5e7eb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+  }
+  header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  h1 { font-size: 2rem; margin: 0 0 8px; font-weight: 700; }
+  .subtitle { color: var(--muted); font-size: 0.95rem; }
+  .meta { margin-top: 16px; font-size: 0.85rem; color: var(--muted); }
+  h2 { font-size: 1.25rem; margin: 36px 0 12px; font-weight: 700; }
+  h3 { font-size: 1.05rem; margin: 24px 0 8px; font-weight: 600; }
+  p, li { font-size: 0.95rem; }
+  ul { padding-left: 22px; }
+  li { margin: 6px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 20px;
+    background: var(--surface);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    font-size: 0.9rem;
+    vertical-align: top;
+  }
+  th { background: #f0f2f6; font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .contact-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 16px;
+  }
+  .small { font-size: 0.85rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>식물카드 개인정보처리방침</h1>
+  <p class="subtitle">Plant Cards Privacy Policy</p>
+  <p class="meta">시행일: 2026년 5월 20일 · 최종 개정: 2026년 5월 20일</p>
+</header>
+
+<p>민수정(이하 "개발자")은 모바일 애플리케이션 <strong>식물카드</strong>(패키지명 <code>com.soojeongmin.plantclassifier</code>, 이하 "본 앱")를 운영하면서
+이용자의 개인정보 보호를 매우 중요하게 여기고 있으며, 「개인정보 보호법」 및 관련 법령을 준수합니다.</p>
+
+<h2>1. 수집하는 개인정보 항목</h2>
+
+<h3>1-1. 소셜 로그인(Apple / Google) 이용 시</h3>
+<table>
+  <thead><tr><th>항목</th><th>수집 시점</th><th>이용 목적</th></tr></thead>
+  <tbody>
+    <tr><td>이메일 주소</td><td>최초 Apple 또는 Google 로그인 시</td><td>계정 식별, 기기 간 학습 기록 동기화</td></tr>
+    <tr><td>사용자 ID (Apple / Google)</td><td>최초 로그인 시</td><td>계정 인증</td></tr>
+  </tbody>
+</table>
+<p class="small">iOS에서 "Apple로 로그인" 사용 시 Apple의 이메일 가리기(비공개 이메일 릴레이)를 선택하면 실제 이메일 대신 익명 릴레이 주소만 전달됩니다. 본 앱은 Apple·Google이 제공하는 이름은 별도로 저장하지 않습니다.</p>
+
+<h3>1-2. 익명(로그인 안 한) 이용 시</h3>
+<table>
+  <thead><tr><th>항목</th><th>수집 시점</th><th>이용 목적</th></tr></thead>
+  <tbody>
+    <tr><td>익명 세션 식별자(Firebase 자동 생성 UID)</td><td>앱 최초 실행 시</td><td>학습 기록 저장 (기기 내 한정)</td></tr>
+  </tbody>
+</table>
+<p class="small">익명 이용 시에는 이메일·이름 등 개인을 직접 식별할 수 있는 정보를 수집하지 않습니다.</p>
+
+<h3>1-3. 모든 이용자 공통 수집 정보</h3>
+<table>
+  <thead><tr><th>항목</th><th>이용 목적</th></tr></thead>
+  <tbody>
+    <tr><td>학습 진행 기록 (카드별 알아요/모름, 퀴즈 정답/오답, 학습 일시)</td><td>학습 기록 저장 및 세트 분류</td></tr>
+    <tr><td>앱 설정값 (언어, 다크모드)</td><td>이용자 환경 유지 (기기 내 저장)</td></tr>
+  </tbody>
+</table>
+<p class="small">본 앱은 별도의 광고 SDK 또는 분석 SDK를 사용하지 않으며, IP 주소·기기 광고 식별자(GAID)·위치정보·연락처·사진을 수집하지 않습니다.</p>
+
+<h2>2. 개인정보의 보유 및 이용 기간</h2>
+<ul>
+  <li><strong>소셜 로그인(Apple/Google) 사용자</strong>: 회원 탈퇴 또는 삭제 요청 시까지 보관</li>
+  <li><strong>익명 이용 사용자</strong>: 앱 삭제 시 또는 마지막 접속일로부터 180일 후 자동 정리</li>
+  <li><strong>학습 기록</strong>: 계정 삭제 시 함께 삭제</li>
+</ul>
+<p>이용자는 언제든지 본 앱 설정 화면의 "계정 탈퇴" 또는 아래 연락처를 통해 본인의 정보 삭제를 요청할 수 있으며, 요청 시 지체 없이 모든 데이터를 파기합니다.</p>
+
+<h2>3. 개인정보의 제3자 제공 및 처리 위탁</h2>
+<p>개발자는 이용자의 개인정보를 외부에 판매·임대하지 않습니다. 다만 서비스 제공을 위해 다음과 같이 처리를 위탁합니다.</p>
+<table>
+  <thead><tr><th>수탁자</th><th>위탁 업무</th><th>위치</th></tr></thead>
+  <tbody>
+    <tr><td>Google LLC (Firebase)</td><td>이용자 인증(Auth), 학습 기록 저장(Firestore), Google 계정 OAuth</td><td>미국 외</td></tr>
+    <tr><td>Apple Inc.</td><td>"Apple로 로그인" 인증 (iOS)</td><td>미국 외</td></tr>
+  </tbody>
+</table>
+
+<h2>4. 식물 사진 및 분류 데이터 출처</h2>
+<p>본 앱이 표시하는 식물 사진과 분류 정보는 다음 공공데이터를 활용합니다.
+이는 이용자 개인정보가 아닌 공공저작물로, 공공누리 제4유형(출처표시·비상업·변경금지)에 따라 사용됩니다.</p>
+<ul>
+  <li>산림청 국립수목원 — 국가표준식물목록 (data.go.kr)</li>
+  <li>산림청 국립수목원 — 표준식물목록 이미지정보 (data.go.kr)</li>
+</ul>
+
+<h2>5. 이용자의 권리</h2>
+<ul>
+  <li>본인의 개인정보 열람·정정·삭제 요청</li>
+  <li>개인정보 처리 정지 요청</li>
+  <li>계정 탈퇴(앱 내 설정 또는 이메일 요청)</li>
+</ul>
+<p>요청은 아래 연락처로 보내주시면 영업일 기준 7일 이내에 처리합니다.
+계정 및 데이터 삭제 절차는 <a href="../account-deletion/">계정 삭제 안내 페이지</a>를 참고해 주세요.</p>
+
+<h2>6. 개인정보의 안전성 확보 조치</h2>
+<ul>
+  <li>전송 구간 암호화(HTTPS/TLS)</li>
+  <li>저장 구간 암호화(Firebase 표준 암호화)</li>
+  <li>최소한의 데이터만 수집하는 원칙 준수</li>
+  <li>접근 권한 최소화 및 정기 점검</li>
+</ul>
+
+<h2>7. 만 14세 미만 아동의 개인정보</h2>
+<p>본 앱은 만 14세 미만 아동을 대상으로 하지 않으며, 만 14세 미만 아동의 개인정보를 의도적으로 수집하지 않습니다.</p>
+
+<h2>8. 개인정보처리방침의 변경</h2>
+<p>본 처리방침이 변경되는 경우 앱 내 공지사항 또는 본 페이지를 통해 사전에 안내합니다.</p>
+
+<h2>9. 개인정보 보호 책임자 및 문의처</h2>
+<div class="contact-box">
+  <p style="margin:0"><strong>책임자</strong>: 민수정</p>
+  <p style="margin:6px 0 0"><strong>이메일</strong>: <a href="mailto:soojeongmin19kor@gmail.com">soojeongmin19kor@gmail.com</a></p>
+</div>
+
+<p class="meta" style="margin-top:48px">© 2026 민수정 · 식물카드</p>
+
+</div>
+</body>
+</html>

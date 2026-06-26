@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>삼각함수 체스 · 계정 및 데이터 삭제 요청</title>
+<style>
+  :root {
+    --bg: #f7f8fb;
+    --surface: #ffffff;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --accent: #047857;
+    --border: #e5e7eb;
+    --danger: #d33b3b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+  }
+  header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  h1 {
+    font-size: 2rem;
+    margin: 0 0 8px;
+    font-weight: 700;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+    margin: 36px 0 12px;
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 1.05rem;
+    margin: 24px 0 8px;
+    font-weight: 600;
+  }
+  p, li { font-size: 0.95rem; }
+  ol, ul { padding-left: 22px; }
+  li { margin: 6px 0; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 20px;
+    background: var(--surface);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    font-size: 0.9rem;
+    vertical-align: top;
+  }
+  th {
+    background: #f0f2f6;
+    font-weight: 600;
+  }
+  tr:last-child td { border-bottom: 0; }
+  .contact-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 16px;
+  }
+  .notice {
+    background: #fff8e6;
+    border-left: 3px solid #f0a500;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 16px 0;
+    font-size: 0.9rem;
+  }
+  .meta { font-size: 0.85rem; color: var(--muted); margin-top: 48px; }
+  .app-info {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+  code {
+    background: #eef0f4;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>계정 및 데이터 삭제 요청</h1>
+  <p class="subtitle">TrigChess · Account &amp; Data Deletion</p>
+</header>
+
+<div class="app-info">
+  <p style="margin:0"><strong>앱 이름</strong>: 삼각함수 체스 (TrigChess)</p>
+  <p style="margin:6px 0 0"><strong>패키지명</strong>: <code>com.soojeongmin.trigchess</code></p>
+  <p style="margin:6px 0 0"><strong>개발자</strong>: 민수정</p>
+</div>
+
+<p>본 페이지는 삼각함수 체스 사용자가 본인의 계정과 관련 데이터의 삭제를 요청하는 방법을 안내합니다.
+관련 법령(개인정보 보호법) 및 Google Play 사용자 데이터 정책에 따라 모든 요청은 지체 없이 처리됩니다.</p>
+
+<h2>1. 앱 내에서 직접 삭제 (권장)</h2>
+
+<p>가장 빠른 방법입니다.</p>
+
+<ol>
+  <li>앱을 실행한 뒤 우측 상단의 톱니바퀴 아이콘으로 <strong>환경설정</strong>에 들어갑니다.</li>
+  <li><strong>계정</strong> 섹션의 <strong>계정 삭제</strong> 버튼을 누릅니다.</li>
+  <li>확인 다이얼로그에서 <strong>삭제</strong>를 누르면 즉시 처리됩니다.</li>
+</ol>
+
+<div class="notice">
+  계정 삭제 버튼은 Google 계정으로 로그인한 경우에만 노출됩니다. 게스트 모드는 별도 절차 없이 90일 후 자동 삭제됩니다.
+</div>
+
+<h2>2. 이메일로 삭제 요청</h2>
+
+<p>앱에 접근할 수 없거나 추가 도움이 필요한 경우 아래 절차에 따라 이메일로 요청해 주세요.</p>
+
+<ol>
+  <li>아래 이메일 주소로 메일을 보냅니다.</li>
+  <li>메일 제목에 <code>[삼각함수 체스] 계정 삭제 요청</code>이라고 기재합니다.</li>
+  <li>메일 본문에 다음 정보를 포함합니다.
+    <ul>
+      <li>로그인에 사용한 <strong>Google 계정 이메일 주소</strong> (Google 로그인 사용자)<br>
+        또는 앱 내 표시되는 <strong>게스트 ID</strong> (게스트 사용자, 설정 화면에서 확인 가능)</li>
+      <li>앱 내 닉네임(설정한 경우)</li>
+    </ul>
+  </li>
+  <li>요청 접수 후 영업일 기준 7일 이내에 처리하고 확인 메일을 회신합니다.</li>
+</ol>
+
+<div class="contact-box">
+  <p style="margin:0"><strong>요청 이메일</strong>: <a href="mailto:soojeongmin19kor@gmail.com?subject=%5B%EC%82%BC%EA%B0%81%ED%95%A8%EC%88%98%20%EC%B2%B4%EC%8A%A4%5D%20%EA%B3%84%EC%A0%95%20%EC%82%AD%EC%A0%9C%20%EC%9A%94%EC%B2%AD">soojeongmin19kor@gmail.com</a></p>
+</div>
+
+<h2>3. 삭제되는 데이터</h2>
+
+<p>계정 삭제 요청 시 다음 항목이 즉시 영구 삭제됩니다.</p>
+
+<table>
+  <thead><tr><th>구분</th><th>데이터 항목</th></tr></thead>
+  <tbody>
+    <tr><td>인증 정보</td><td>Google 계정 이메일, 사용자 이름, 사용자 ID(또는 게스트 세션 ID)</td></tr>
+    <tr><td>프로필</td><td>닉네임, 표시 이름, 프로필 생성·수정 일시</td></tr>
+    <tr><td>게임 기록</td><td>승리·패배 기록, 라운드별 결과, 말 위치·각도 상태</td></tr>
+    <tr><td>방 참여 이력</td><td>참여한 모든 멀티플레이 방의 기록</td></tr>
+    <tr><td>앱 설정</td><td>닉네임, 언어 등 사용자 환경 설정</td></tr>
+  </tbody>
+</table>
+
+<h2>4. 보관되는 데이터</h2>
+
+<p>다음 데이터는 법적 의무 이행 또는 시스템 보안상 필요한 최소 기간 동안 보관 후 폐기됩니다.</p>
+
+<table>
+  <thead><tr><th>구분</th><th>보관 기간</th><th>법적 근거</th></tr></thead>
+  <tbody>
+    <tr><td>서비스 부정 이용 차단 기록(있는 경우)</td><td>최대 1년</td><td>정보통신망법 등</td></tr>
+  </tbody>
+</table>
+
+<p>위 항목 외의 모든 데이터는 즉시 삭제됩니다. 본인의 식별 정보는 보관되지 않으며,
+보관되는 기록은 익명화된 로그 형태로만 유지됩니다.</p>
+
+<h2>5. 게스트 모드 사용자</h2>
+
+<div class="notice">
+  게스트 모드로 이용한 데이터는 별도 요청 없이도 <strong>마지막 접속일로부터 90일 후 자동 삭제</strong>됩니다.
+  즉시 삭제를 원하시면 위 2번 절차에 따라 게스트 ID를 함께 보내주세요.
+</div>
+
+<h2>6. 자주 묻는 질문</h2>
+
+<h3>Q. 삭제 후 복구가 가능한가요?</h3>
+<p>삭제된 데이터는 복구할 수 없습니다. 신중히 요청해 주세요.</p>
+
+<h3>Q. 계정을 삭제하지 않고 게임 기록만 초기화할 수 있나요?</h3>
+<p>현재는 부분 삭제 기능을 제공하지 않습니다. 계정 전체 삭제 후 다시 로그인하시면 새로 시작할 수 있습니다.</p>
+
+<h3>Q. 명예의 전당 기록은 어떻게 되나요?</h3>
+<p>계정 삭제 시 명예의 전당의 본인 기록도 함께 즉시 삭제됩니다.</p>
+
+<h2>7. 문의</h2>
+
+<div class="contact-box">
+  <p style="margin:0"><strong>책임자</strong>: 민수정</p>
+  <p style="margin:6px 0 0"><strong>이메일</strong>: <a href="mailto:soojeongmin19kor@gmail.com">soojeongmin19kor@gmail.com</a></p>
+  <p style="margin:6px 0 0"><strong>개인정보처리방침</strong>: <a href="../privacy/">개인정보처리방침 페이지</a></p>
+</div>
+
+<p class="meta" style="margin-top:48px">© 2026 민수정 · TrigChess · 최종 개정 2026년 5월 19일</p>
+
+</div>
+</body>
+</html>
