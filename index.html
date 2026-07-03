@@ -391,6 +391,18 @@ const planeMesh=new THREE.LineSegments(new THREE.EdgesGeometry(planeGeo, 1), new
 planeMesh.visible=false; scene.add(planeMesh);
 const fwd=new THREE.Vector3(), rgt=new THREE.Vector3(), upv=new THREE.Vector3(), ptgt=new THREE.Vector3(), pup=new THREE.Vector3();
 
+/* plane light trail */
+const TRAIL=Math.round(48*(REDUCE?0.4:1));
+const tPos=new Float32Array(TRAIL*3), tA=new Float32Array(TRAIL), tS=new Float32Array(TRAIL);
+for(let i=0;i<TRAIL;i++) tS[i]=0.5+2.6*(1-i/TRAIL);
+const tGeo=new THREE.BufferGeometry();
+tGeo.setAttribute('position', new THREE.BufferAttribute(tPos,3));
+tGeo.setAttribute('aA', new THREE.BufferAttribute(tA,1));
+tGeo.setAttribute('aS', new THREE.BufferAttribute(tS,1));
+const tMat=new THREE.ShaderMaterial({ transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, vertexShader:softVert, fragmentShader:softFrag, uniforms:{ uColor:{value:new THREE.Color(0xcfe4ff)} } });
+const trailPts=new THREE.Points(tGeo, tMat); trailPts.frustumCulled=false; scene.add(trailPts);
+let trailInit=false;
+
 /* input */
 let mx=innerWidth/2, my=innerHeight/2;
 const mt=new THREE.Vector2(0,0), m=new THREE.Vector2(0,0);
@@ -465,13 +477,20 @@ function frame(){
     fwd.set(0,0,-1).applyQuaternion(camera.quaternion); rgt.set(1,0,0).applyQuaternion(camera.quaternion); upv.set(0,1,0).applyQuaternion(camera.quaternion);
     const cross=Math.max(0,Math.min(1,(p-0.38)/0.28));
     const arc=Math.sin(cross*Math.PI);
-    const offX=130-cross*260, depth=120-arc*80, offY=40-cross*90+arc*6+Math.sin(t*0.8)*0.8;
+    const offX=130-cross*260 + m.x*46, depth=120-arc*80, offY=40-cross*90+arc*6+Math.sin(t*0.8)*0.8 - m.y*30;
     planeMesh.position.copy(camera.position).addScaledVector(fwd,depth).addScaledVector(rgt,offX).addScaledVector(upv,offY);
     const tf=-Math.cos(cross*Math.PI)*0.5+0.12;
-    ptgt.copy(planeMesh.position).addScaledVector(rgt,-1.0+m.x*0.15).addScaledVector(upv,-0.55+m.y*0.15).addScaledVector(fwd,tf);
-    planeMesh.up.copy(upv); planeMesh.lookAt(ptgt); planeMesh.rotateZ(-0.3 - m.x*1.0); planeMesh.rotateX(0.25 + m.y*0.5);
+    ptgt.copy(planeMesh.position).addScaledVector(rgt,-1.0+m.x*0.4).addScaledVector(upv,-0.55+m.y*0.4).addScaledVector(fwd,tf);
+    const roll=smoothstep(0.30,0.68,cross)*(REDUCE?0:Math.PI*2);
+    planeMesh.up.copy(upv); planeMesh.lookAt(ptgt); planeMesh.rotateZ(-0.3 - m.x*1.2 - roll); planeMesh.rotateX(0.25 + m.y*0.6);
     planeMesh.scale.setScalar(1.7*Math.min(1,skyVis+0.4)); planeMesh.material.opacity=skyVis;
-  } else planeMesh.visible=false;
+
+    if(!trailInit){ for(let i=0;i<TRAIL;i++){ tPos[i*3]=planeMesh.position.x; tPos[i*3+1]=planeMesh.position.y; tPos[i*3+2]=planeMesh.position.z; } trailInit=true; }
+    else { for(let i=TRAIL-1;i>0;i--){ tPos[i*3]=tPos[(i-1)*3]; tPos[i*3+1]=tPos[(i-1)*3+1]; tPos[i*3+2]=tPos[(i-1)*3+2]; }
+      tPos[0]=planeMesh.position.x; tPos[1]=planeMesh.position.y; tPos[2]=planeMesh.position.z; }
+    for(let i=0;i<TRAIL;i++) tA[i]=skyVis*(1-i/TRAIL)*0.8;
+    tGeo.attributes.position.needsUpdate=true; tGeo.attributes.aA.needsUpdate=true;
+  } else { planeMesh.visible=false; if(trailInit){ trailInit=false; for(let i=0;i<TRAIL;i++) tA[i]=0; tGeo.attributes.aA.needsUpdate=true; } }
 
   /* sea + splash */
   seaMat.uniforms.uTime.value=t; seaMat.uniforms.uOpacity.value=smoothstep(0.70,0.82,p)*(1-smoothstep(0.97,0.995,p));
