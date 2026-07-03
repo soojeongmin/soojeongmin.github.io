@@ -80,34 +80,29 @@
   .reveal.in { opacity:1; filter:blur(0); transform:none; }
   .reveal.d1 { transition-delay:.12s; } .reveal.d2 { transition-delay:.24s; } .reveal.d3 { transition-delay:.36s; }
 
-  /* DNA helix portfolio */
-  .posts { position:relative; z-index:2; height:150vh; }
-  .hstage { position:sticky; top:0; height:100vh; overflow:hidden; perspective:1400px; }
-  .htitle { position:absolute; top:8vh; left:0; right:0; text-align:center; z-index:3; pointer-events:none; }
+  /* journey grid */
+  .posts { position:relative; z-index:2; min-height:100vh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; padding:16vh 6vw 13vh; }
+  .htitle { text-align:center; margin-bottom:48px; }
   .htitle .eyebrow { display:block; margin-bottom:12px; }
   .htitle h2 { font-size:clamp(26px,4vw,52px); }
   .htitle p { margin-top:10px; color:var(--muted); font-size:13px; letter-spacing:.04em; }
-  .hcore { position:absolute; left:50%; top:0; width:80px; height:100%; transform:translateX(-50%); z-index:1; pointer-events:none;
-    background:linear-gradient(180deg, transparent 4%, rgba(120,170,255,.24) 50%, transparent 96%); filter:blur(12px); }
-  .hcore .sp { position:absolute; bottom:-12px; border-radius:50%; background:rgba(195,218,255,.95);
-    box-shadow:0 0 7px rgba(150,190,255,.85); animation-name:rise; animation-timing-function:linear; animation-iteration-count:infinite; }
-  @keyframes rise { 0%{transform:translateY(0) scale(.5); opacity:0} 12%{opacity:.95} 85%{opacity:.8} 100%{transform:translateY(-90vh) scale(1); opacity:0} }
-  .helix { position:absolute; left:50%; top:50%; transform-style:preserve-3d; z-index:2; }
-  .pcard { position:absolute; left:0; top:0; width:322px; margin:-108px 0 0 -161px; border-radius:22px;
-    padding:26px 26px 28px; overflow:hidden; backface-visibility:visible; pointer-events:auto; color:inherit;
+  .grid { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; max-width:1044px; width:100%; }
+  .pcard { position:relative; width:320px; border-radius:22px; overflow:hidden; color:inherit;
+    padding:26px 26px 28px;
     background:linear-gradient(158deg, rgba(28,42,80,.6), rgba(11,17,36,.5));
     border:1px solid rgba(255,255,255,.12);
     backdrop-filter:blur(15px) saturate(165%); -webkit-backdrop-filter:blur(15px) saturate(165%);
     box-shadow:0 14px 40px rgba(0,0,0,.44), inset 0 1px 0 rgba(255,255,255,.16);
-    transition:border-color .45s, box-shadow .45s; }
+    transition:border-color .4s, box-shadow .4s, transform .4s; }
   .pcard::before { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
     background:radial-gradient(120% 72% at 18% -8%, rgba(150,190,255,.2), transparent 55%); mix-blend-mode:screen; }
-  .pcard.focus { border-color:rgba(110,168,255,.55);
-    box-shadow:0 20px 54px rgba(0,0,0,.55), 0 0 34px rgba(110,168,255,.2), 0 0 0 1px rgba(110,168,255,.28), inset 0 1px 0 rgba(255,255,255,.26); }
+  .pcard:hover { transform:translateY(-6px); border-color:rgba(110,168,255,.55);
+    box-shadow:0 24px 58px rgba(0,0,0,.55), 0 0 34px rgba(110,168,255,.2), 0 0 0 1px rgba(110,168,255,.28), inset 0 1px 0 rgba(255,255,255,.26); }
   .pcard .pnum { position:absolute; top:6px; right:20px; font-family:var(--serif); font-style:italic; font-weight:800;
     font-size:84px; line-height:1; color:transparent; -webkit-text-stroke:1px rgba(158,195,255,.2);
     pointer-events:none; user-select:none; }
-  .pcard.focus .pnum { -webkit-text-stroke-color:rgba(158,195,255,.42); }
+  .pcard:hover .pnum { -webkit-text-stroke-color:rgba(158,195,255,.42); }
   .pcard .pm { position:relative; font-family:var(--display); font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); }
   .pcard .pm::after { content:""; display:block; width:26px; height:2px; margin-top:12px; border-radius:2px;
     background:linear-gradient(90deg, var(--accent), transparent); }
@@ -124,14 +119,13 @@
   @media (max-width:640px){
     #chapters { right:14px; gap:13px; }
     #chapters button .lbl { display:none; }
-    .pcard { width:min(84vw,320px); margin-left:calc(min(84vw,320px)/-2); }
+    .pcard { width:min(88vw,340px); }
     #hint { letter-spacing:.16em; }
   }
   @media (prefers-reduced-motion:reduce){
     html { scroll-behavior:auto; }
     .reveal { transition-duration:.35s; filter:none; transform:none; }
     #hint .mouse::before { animation:none; }
-    .hcore .sp { animation:none !important; }
   }
 </style>
 </head>
@@ -167,14 +161,12 @@
 </div>
 
 <section class="posts" data-chapter="걸어온 길">
-  <div class="hstage">
-    <div class="htitle">
-      <span class="eyebrow">THE PATH</span>
-      <h2>걸어온 길<span class="accent">.</span></h2>
-      <p>별에서 바다로 — 지금까지의 여정</p>
-    </div>
-    <div class="helix" id="helix"></div>
+  <div class="htitle">
+    <span class="eyebrow reveal">THE PATH</span>
+    <h2 class="reveal d1">걸어온 길<span class="accent">.</span></h2>
+    <p class="reveal d2">별에서 바다로 — 지금까지의 여정</p>
   </div>
+  <div class="grid" id="journeyGrid"></div>
 </section>
 
 <footer>© 2026 민수정 · <a href="mailto:soojeongmin@cnsa.hs.kr" style="color:inherit;text-decoration:none">soojeongmin@cnsa.hs.kr</a></footer>
@@ -217,7 +209,7 @@ const chapNav=document.getElementById('chapters');
 const chapBtns=chapEls.map((sec,i)=>{
   const b=document.createElement('button'); b.setAttribute('aria-label', sec.dataset.chapter);
   b.innerHTML=`<span class="lbl">${sec.dataset.chapter}</span>`;
-  b.addEventListener('click',()=>{ const y=sec.offsetTop + (sec.classList.contains('posts')?Math.min(innerHeight,sec.offsetHeight-innerHeight)*0.3:0); targetScroll=y; window.scrollTo({top:y, behavior:'smooth'}); });
+  b.addEventListener('click',()=>{ const y=sec.offsetTop; targetScroll=y; window.scrollTo({top:y, behavior:'smooth'}); });
   chapNav.appendChild(b); return b;
 });
 function updateChapters(){
@@ -226,7 +218,7 @@ function updateChapters(){
   chapBtns.forEach((b,i)=>b.classList.toggle('on', i===act));
 }
 
-/* ===================== journey helix (DOM 3D) ===================== */
+/* ===================== journey grid ===================== */
 const POSTS=[
   { g:'01', m:'2020 · Soongsil',  t:'소프트웨어학부',   d:'0과 1로 세상을 설명하는 언어를 처음 배웠습니다.' },
   { g:'02', m:'PS · Project',     t:'알고리즘과 팀 개발', d:'문제를 풀고, 팀으로 서비스를 만들며 손을 움직였습니다.' },
@@ -234,33 +226,15 @@ const POSTS=[
   { g:'04', m:'숙명여대 교육대학원', t:'다시, 배우는 사람', d:'가르치는 일을 더 깊이 공부하고 있습니다.' },
   { g:'05', m:'Always',           t:'도구를 만드는 사람', d:'매일의 불편을 코드로 바꾸고, 그 과정을 글로 남깁니다.' },
 ];
-const helixEl=document.getElementById('helix');
-const HR=300, HASTEP=55, VGAP=165;
-const cardEls=[];
+const gridEl=document.getElementById('journeyGrid');
 POSTS.forEach((po,idx)=>{
-  const a=document.createElement('div'); a.className='pcard';
+  const a=document.createElement('div'); a.className='pcard reveal'+(idx%3?' d'+(idx%3):'');
   a.innerHTML=`<span class="pnum">${po.g}</span><div class="pm">${po.m}</div><div class="pt">${po.t}</div><div class="pd">${po.d}</div>`;
-  a._i=idx;
-  helixEl.appendChild(a); cardEls.push(a);
+  gridEl.appendChild(a); io.observe(a);
 });
 let postsTop=0, postsLen=1, postsStart=1;
 function measure(){ const el=document.querySelector('.posts'); postsTop=el.offsetTop; postsStart=Math.max(1,el.offsetTop); postsLen=Math.max(1, el.offsetHeight - innerHeight); }
 measure(); addEventListener('resize', measure); addEventListener('load', measure);
-function updateHelix(){
-  const pp=Math.max(0, Math.min(1, (scrollY - postsTop)/postsLen));
-  const current=pp*(POSTS.length-1);
-  helixEl.style.transform='translate(-50%,-50%)';
-  for(const el of cardEls){
-    const ri=el._i-current, ang=ri*HASTEP, y=ri*VGAP, fr=Math.cos(ang*Math.PI/180);
-    el.style.transform=`translateY(${y.toFixed(1)}px) rotateY(${ang.toFixed(1)}deg) translateZ(${HR}px)`;
-    const df=Math.max(0,1-Math.abs(ri)*0.28);
-    el.style.opacity = (df*(0.32+0.68*((fr+1)/2))).toFixed(2);
-    el.style.zIndex = String(Math.round(200+fr*100));
-    const front=Math.abs(ri)<0.5;
-    el.style.pointerEvents = front ? 'auto':'none';
-    el.classList.toggle('focus', front && fr>0.6);
-  }
-}
 
 /* ===================== WebGL scene ===================== */
 const canvas = document.getElementById('c');
@@ -423,7 +397,6 @@ function frame(){
 
   const spaceMix=1-smoothstep(0.18,0.46,p);
   camera.position.set(numAt(CAMX,p)+Math.sin(t*0.03)*3*spaceMix+m.x*4*spaceMix, numAt(CAMY,p)+Math.cos(t*0.025)*2*spaceMix, numAt(CAMZ,p));
-  if(p>0.94){ const dp=Math.max(0,Math.min(1,(scrollY-postsTop)/postsLen)); camera.position.z -= dp*48; }
   camera.up.set(0,1,0);
   camera.lookAt(numAt(LOOKX,p)+(Math.sin(t*0.02)*80+m.x*120)*spaceMix, numAt(LOOKY,p)+(Math.sin(t*0.017)*18+m.y*70)*spaceMix, numAt(LOOKZ,p));
   camera.rotateZ(numAt(ROLL,p));
@@ -502,7 +475,6 @@ function frame(){
     dustGeo.attributes.position.needsUpdate=true; dustGeo.attributes.aA.needsUpdate=true;
   } else if(dA[0]!==0){ for(let i=0;i<DUST;i++) dA[i]=0; dustGeo.attributes.aA.needsUpdate=true; }
 
-  updateHelix();
   updateChapters();
   totop.classList.toggle('show', window.scrollY > maxScroll()-innerHeight*0.5);
   renderer.render(scene, camera);
