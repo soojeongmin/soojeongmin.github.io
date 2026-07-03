@@ -281,7 +281,7 @@ function numAt(arr,p){ const [i,f]=seg(arr,p); return arr[i][1]+(arr[i+1][1]-arr
 const _ca=new THREE.Color(),_cb=new THREE.Color();
 function colAt(arr,p,out){ const [i,f]=seg(arr,p); _ca.setHex(arr[i][1]); _cb.setHex(arr[i+1][1]); out.copy(_ca).lerp(_cb,f); }
 
-const SKY=[[0,0x02030a],[0.25,0x07112a],[0.50,0x163c70],[0.70,0x2f6cb4],[0.88,0x2056a0],[0.96,0x103a72],[1,0x07274f]];
+const SKY=[[0,0x02030a],[0.22,0x081634],[0.40,0x1f4f8e],[0.50,0x4f8ecf],[0.58,0x7cb4e2],[0.66,0x4d8ac6],[0.78,0x2f6cb4],[0.90,0x1c4f8c],[1,0x0a2c55]];
 const FOG=[[0,0.0010],[0.45,0.0016],[0.82,0.0034],[0.94,0.010],[1,0.020]];
 const CAMX=[[0,0],[0.28,55],[0.55,-34],[0.82,12],[0.90,4],[1,0]];
 const CAMY=[[0,300],[0.25,242],[0.50,175],[0.70,95],[0.82,42],[0.90,16],[0.96,-5],[1,-26]];
@@ -391,33 +391,6 @@ const planeMesh=new THREE.LineSegments(new THREE.EdgesGeometry(planeGeo, 1), new
 planeMesh.visible=false; scene.add(planeMesh);
 const fwd=new THREE.Vector3(), rgt=new THREE.Vector3(), upv=new THREE.Vector3(), ptgt=new THREE.Vector3(), pup=new THREE.Vector3();
 
-/* halftone cloud (plane dissolves into dots) */
-const haloFrag=`precision mediump float; uniform vec3 uColor; varying float vA;
-  void main(){ vec2 c=gl_PointCoord-0.5; float d=length(c); float a=smoothstep(0.5,0.4,d); if(a<=0.0) discard; gl_FragColor=vec4(uColor, a*vA); }`;
-const HALO=Math.round(320*QUAL);
-const haloPos=new Float32Array(HALO*3), haloA=new Float32Array(HALO), haloS=new Float32Array(HALO);
-(function(){
-  const LB=[[0,0.2,4.2],[-4.4,-0.4,3.0],[4.4,-0.4,3.0],[-2.4,2.4,2.7],[2.4,2.7,2.9],[0,3.7,2.3],[-6.6,-1.0,2.0],[6.6,-1.0,2.0]];
-  let tot=0; const cw=LB.map(l=>{ tot+=l[2]*l[2]; return tot; });
-  for(let i=0;i<HALO;i++){
-    let pick=Math.random()*tot, li=0; while(li<cw.length-1 && pick>cw[li]) li++;
-    const l=LB[li], a=Math.random()*Math.PI*2, rr=Math.pow(Math.random(),0.5)*l[2];
-    let x=l[0]+Math.cos(a)*rr, y=l[1]+Math.sin(a)*rr;
-    if(y<-2.0) y=-2.0+Math.random()*0.35;
-    haloPos[i*3]=x; haloPos[i*3+1]=y; haloPos[i*3+2]=(Math.random()-0.5)*0.8;
-    const dc=Math.min(1, Math.hypot(x*0.7, y-0.6)/5.6);
-    haloS[i]=(3.9-dc*2.7)*(0.75+Math.random()*0.6);
-  }
-})();
-const haloGeo=new THREE.BufferGeometry();
-haloGeo.setAttribute('position', new THREE.BufferAttribute(haloPos,3));
-haloGeo.setAttribute('aA', new THREE.BufferAttribute(haloA,1));
-haloGeo.setAttribute('aS', new THREE.BufferAttribute(haloS,1));
-const haloMat=new THREE.ShaderMaterial({ transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, vertexShader:softVert, fragmentShader:haloFrag, uniforms:{ uColor:{value:new THREE.Color(0xdce8ff)} } });
-const haloPts=new THREE.Points(haloGeo, haloMat); haloPts.frustumCulled=false; haloPts.visible=false; scene.add(haloPts);
-
-const cloudPos=new THREE.Vector3();
-
 /* input */
 let mx=innerWidth/2, my=innerHeight/2;
 const mt=new THREE.Vector2(0,0), m=new THREE.Vector2(0,0);
@@ -485,14 +458,11 @@ function frame(){
   } else edgeLife.clear();
   lineGeo.setDrawRange(0,e*2); lineGeo.attributes.position.needsUpdate=true; lineGeo.attributes.color.needsUpdate=true;
 
-  /* paper plane → halftone cloud → falling points */
-  const skyVis=smoothstep(0.38,0.45,p)*(1-smoothstep(0.55,0.62,p));
-  const cloudVis=smoothstep(0.55,0.63,p)*(1-smoothstep(0.80,0.90,p));
-  if(skyVis>0.01 || cloudVis>0.01){
-    fwd.set(0,0,-1).applyQuaternion(camera.quaternion); rgt.set(1,0,0).applyQuaternion(camera.quaternion); upv.set(0,1,0).applyQuaternion(camera.quaternion);
-  }
+  /* paper plane */
+  const skyVis=smoothstep(0.38,0.45,p)*(1-smoothstep(0.62,0.70,p));
   if(skyVis>0.01){
     planeMesh.visible=true;
+    fwd.set(0,0,-1).applyQuaternion(camera.quaternion); rgt.set(1,0,0).applyQuaternion(camera.quaternion); upv.set(0,1,0).applyQuaternion(camera.quaternion);
     const cross=Math.max(0,Math.min(1,(p-0.38)/0.28));
     const arc=Math.sin(cross*Math.PI);
     const offX=130-cross*260, depth=120-arc*80, offY=40-cross*90+arc*6+Math.sin(t*0.8)*0.8;
@@ -502,14 +472,6 @@ function frame(){
     planeMesh.up.copy(upv); planeMesh.lookAt(ptgt); planeMesh.rotateZ(-0.3 - m.x*1.0); planeMesh.rotateX(0.25 + m.y*0.5);
     planeMesh.scale.setScalar(1.7*Math.min(1,skyVis+0.4)); planeMesh.material.opacity=skyVis;
   } else planeMesh.visible=false;
-
-  if(cloudVis>0.01){
-    cloudPos.copy(camera.position).addScaledVector(fwd,94).addScaledVector(upv,20+Math.sin(t*0.5)*1.2).addScaledVector(rgt,m.x*6);
-    haloPts.visible=true; haloPts.position.copy(cloudPos); haloPts.quaternion.copy(camera.quaternion);
-    haloPts.scale.setScalar(1.3+smoothstep(0.72,0.90,p)*0.55);
-    for(let i=0;i<HALO;i++) haloA[i]=cloudVis*(0.62+0.38*Math.sin(t*2.2+i*1.3));
-    haloGeo.attributes.aA.needsUpdate=true;
-  } else haloPts.visible=false;
 
   /* sea + splash */
   seaMat.uniforms.uTime.value=t; seaMat.uniforms.uOpacity.value=smoothstep(0.70,0.82,p)*(1-smoothstep(0.97,0.995,p));
