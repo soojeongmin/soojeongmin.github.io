@@ -111,7 +111,7 @@ addEventListener('load',()=>window.scrollTo(0,0));
 /* scroll speed limiter (wheel damp + smooth) */
 let targetScroll=0, wheelIdle=999;
 function maxScroll(){ return Math.max(0, document.documentElement.scrollHeight - innerHeight); }
-addEventListener('wheel', e=>{ e.preventDefault(); targetScroll=Math.max(0, Math.min(maxScroll(), targetScroll + e.deltaY*0.5)); wheelIdle=0; }, {passive:false});
+addEventListener('wheel', e=>{ e.preventDefault(); targetScroll=Math.max(0, Math.min(maxScroll(), targetScroll + e.deltaY*0.95)); wheelIdle=0; }, {passive:false});
 const totop=document.getElementById('totop');
 totop.addEventListener('click',()=>{ targetScroll=0; window.scrollTo({top:0, behavior:'smooth'}); });
 
@@ -294,7 +294,7 @@ const clock=new THREE.Clock();
 function frame(){
   const dt=Math.min(clock.getDelta(),0.05), t=clock.elapsedTime;
   wheelIdle++;
-  if(wheelIdle<=45){ const cur=window.scrollY; window.scrollTo(0, cur+(targetScroll-cur)*0.09); } else { targetScroll=window.scrollY; }
+  if(wheelIdle<=45){ const cur=window.scrollY; window.scrollTo(0, cur+(targetScroll-cur)*0.16); } else { targetScroll=window.scrollY; }
   const target=Math.max(0, Math.min(1, scrollY/postsStart));
   scrollT += (target-scrollT)*0.05;
   m.x+=(mt.x-m.x)*0.05; m.y+=(mt.y-m.y)*0.05;
