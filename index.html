@@ -19,7 +19,6 @@
     --serif:"Zodiak",Georgia,"Times New Roman",serif;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
   html, body { color:var(--fg); font-family:var(--kr); background:var(--bg); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
   ::selection { background:rgba(110,168,255,.32); color:#fff; }
   #c { position:fixed; inset:0; z-index:0; display:block; }
@@ -183,12 +182,9 @@ if('scrollRestoration' in history) history.scrollRestoration='manual';
 window.scrollTo(0,0);
 addEventListener('load',()=>window.scrollTo(0,0));
 
-/* scroll speed limiter (wheel damp + smooth) */
-let targetScroll=0, wheelIdle=999;
 function maxScroll(){ return Math.max(0, document.documentElement.scrollHeight - innerHeight); }
-addEventListener('wheel', e=>{ if(matchMedia('(prefers-reduced-motion:reduce)').matches) return; e.preventDefault(); targetScroll=Math.max(0, Math.min(maxScroll(), targetScroll + e.deltaY*1.0)); wheelIdle=0; }, {passive:false});
 const totop=document.getElementById('totop');
-totop.addEventListener('click',()=>{ targetScroll=0; window.scrollTo({top:0, behavior:'smooth'}); });
+totop.addEventListener('click',()=>{ window.scrollTo({top:0, behavior:'smooth'}); });
 
 /* quality tiers */
 const REDUCE = matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -209,7 +205,7 @@ const chapNav=document.getElementById('chapters');
 const chapBtns=chapEls.map((sec,i)=>{
   const b=document.createElement('button'); b.setAttribute('aria-label', sec.dataset.chapter);
   b.innerHTML=`<span class="lbl">${sec.dataset.chapter}</span>`;
-  b.addEventListener('click',()=>{ const y=sec.offsetTop; targetScroll=y; window.scrollTo({top:y, behavior:'smooth'}); });
+  b.addEventListener('click',()=>{ window.scrollTo({top:sec.offsetTop, behavior:'smooth'}); });
   chapNav.appendChild(b); return b;
 });
 function updateChapters(){
@@ -386,8 +382,6 @@ const clock=new THREE.Clock();
 
 function frame(){
   const dt=Math.min(clock.getDelta(),0.05), t=clock.elapsedTime;
-  wheelIdle++;
-  if(wheelIdle<=45){ const cur=window.scrollY; window.scrollTo(0, cur+(targetScroll-cur)*0.18); } else { targetScroll=window.scrollY; }
   const target=Math.max(0, Math.min(1, scrollY/postsStart));
   scrollT += (target-scrollT)*0.09;
   m.x+=(mt.x-m.x)*0.05; m.y+=(mt.y-m.y)*0.05;
